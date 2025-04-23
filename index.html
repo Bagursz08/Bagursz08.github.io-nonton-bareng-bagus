@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nonton Bareng Bagus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Patrick Hand', cursive;
+      background: pink;
+      text-align: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .hidden { display: none; }
+    .btn {
+      background: hotpink;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 15px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: deeppink;
+    }
+    #tidak {
+      position: absolute;
+    }
+    .hati {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: red;
+      animation: float 4s infinite;
+      top: 100%;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="beautiful.mp3" type="audio/mpeg">
+  Browsermu tidak mendukung audio.
+</audio>
+
+<h1 id="halo">Hai kamu yang manis...</h1>
+
+<div id="formNama">
+  <p>Masukin dulu nama kamu yaa</p>
+  <input type="text" id="nama" placeholder="Namamu..." />
+  <button class="btn" onclick="mulai()">Lanjut</button>
+</div>
+
+<div id="pertanyaan" class="hidden">
+  <h2 id="teksPertanyaan"></h2>
+  <button class="btn" onclick="jawabIya()">Iya</button>
+  <button class="btn" id="tidak" onclick="pindah()">Tidak</button>
+</div>
+
+<div id="jawaban" class="hidden">
+  <h2 id="hasilJawaban"></h2>
+  <p>Mau nonton bareng kapan?</p>
+  <input type="date" id="tanggal" />
+  <button class="btn" onclick="selesai()">Selesai</button>
+</div>
+
+<div id="selesaiPage" class="hidden">
+  <h2 id="ucapanAkhir"></h2>
+</div>
+
+<script>
+let nama = "";
+let count = 0;
+
+function mulai() {
+  nama = document.getElementById("nama").value;
+  if(nama !== "") {
+    document.getElementById("formNama").classList.add("hidden");
+    document.getElementById("teksPertanyaan").innerText = `${nama}, mau gak jadi pacarku?`;
+    document.getElementById("pertanyaan").classList.remove("hidden");
+  }
+}
+
+function jawabIya() {
+  document.getElementById("pertanyaan").classList.add("hidden");
+  document.getElementById("hasilJawaban").innerText = `Selamat! Sekarang kamu, ${nama}, jadi pacar Bagus Andreyanto`;
+  document.getElementById("jawaban").classList.remove("hidden");
+}
+
+function pindah() {
+  if(count < 9) {
+    const btn = document.getElementById("tidak");
+    btn.style.top = Math.random() * window.innerHeight + "px";
+    btn.style.left = Math.random() * window.innerWidth + "px";
+    count++;
+  } else {
+    document.getElementById("tidak").innerText = "Iya deh...";
+    document.getElementById("tidak").setAttribute("onclick", "jawabIya()");
+  }
+}
+
+function selesai() {
+  const tgl = document.getElementById("tanggal").value;
+  document.getElementById("jawaban").classList.add("hidden");
+  document.getElementById("ucapanAkhir").innerText = `Yey! Kita nonton bareng tanggal ${tgl}, gak sabarrr~`;
+  document.getElementById("selesaiPage").classList.remove("hidden");
+}
+
+setInterval(() => {
+  const hati = document.createElement("div");
+  hati.className = "hati";
+  hati.style.left = Math.random() * 100 + "vw";
+  hati.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+  document.body.appendChild(hati);
+  setTimeout(() => hati.remove(), 4000);
+}, 300);
+</script>
+
+</body>
+</html>
